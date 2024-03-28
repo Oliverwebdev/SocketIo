@@ -8,40 +8,50 @@
     <script src="/socket.io/socket.io.js"></script>
     <script>
       var socket = io();
-      var myId = ""; // Variable für die eigene ID
+      var myId = "";
       window.onload = function () {
         var form = document.getElementById("form");
         var input = document.getElementById("input");
-
+        var userNameForm = document.getElementById("userNameForm");
+        var userNameInput = document.getElementById("userNameInput");
+  
+        // Benutzerregistrierung
+        userNameForm.addEventListener("submit", function (e) {
+          e.preventDefault();
+          if (userNameInput.value) {
+            socket.emit("register user", userNameInput.value);
+            // Füge hier eine Logik hinzu, um das Registrierungsformular auszublenden
+          }
+        });
+  
+        // Chat-Nachrichten senden
         form.addEventListener("submit", function (e) {
           e.preventDefault();
           if (input.value) {
-            // Sende die Nachricht zusammen mit der eigenen ID
             socket.emit("chat message", { msg: input.value, id: myId });
-            addMessage(input.value, "sent"); // Füge die eigene Nachricht hinzu
+            addMessage(input.value, "sent");
             input.value = "";
           }
         });
-
+  
+        // Empfang von Chat-Nachrichten
         socket.on("chat message", function (data) {
-          // Überprüfe, ob die Nachricht von dir selbst oder von jemand anderem stammt
           if (data.id === myId) {
             addMessage(data.msg, "sent");
           } else {
             addMessage(data.msg, "received");
           }
         });
-
+  
         socket.on("your id", function (id) {
-          myId = id; // Speichere die eigene ID
-          document.getElementById("userIdDisplay").textContent =
-            "Deine ID: " + id;
+          myId = id;
+          document.getElementById("userIdDisplay").textContent = "Deine ID: " + id;
         });
-
+  
         function addMessage(msg, type) {
           var item = document.createElement("li");
           item.textContent = msg;
-          item.className = type; // Füge die Klasse hinzu
+          item.className = type;
           document.getElementById("messages").appendChild(item);
           window.scrollTo(0, document.body.scrollHeight);
         }
@@ -50,6 +60,10 @@
   </head>
   <body>
     <div id="userIdDisplay"></div>
+    <!-- Benutzerregistrierungsformular -->
+    <form id="userNameForm" action="">
+      <input id="userNameInput" placeholder="Benutzername" autocomplete="off"/><button>Registrieren</button>
+    </form>
     <ul id="messages"></ul>
     <form id="form" action="">
       <input id="input" autocomplete="on" /><button>Send</button>
