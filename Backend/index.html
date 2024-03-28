@@ -2,6 +2,8 @@
 <html>
   <head>
     <title>Socket.IO Chat</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+
 
     <script src="/socket.io/socket.io.js"></script>
     <script>
@@ -54,66 +56,41 @@
     </form>
   </body>
   <style>
-    body,
-    ul,
-    form,
-    input,
-    button {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+  
+    /* CSS für das gesamte Layout und Design */
+    body, ul, form, input, button {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
     }
-
-    body {
-      font-family: "Arial", sans-serif; /* Verspielte Schriftart, als Fallback Arial */
-      background-color: #f0f0f0; /* Heller Hintergrund */
+    .chat-container {
+        display: flex;
+        justify-content: space-between;
+        padding: 20px;
     }
-
-    ul#messages {
-      list-style-type: none; /* Entfernt Bulletpoints */
-      width: 100%;
-      padding: 20px; /* Etwas Abstand nach innen */
-      height: 300px; /* Feste Höhe für den Nachrichtenbereich */
-      overflow-y: scroll; /* Erlaubt Scrollen, wenn zu viele Nachrichten */
-      border: 1px solid #ddd; /* Leichter Rahmen */
-      border-radius: 10px; /* Abgerundete Ecken */
-      background-color: #fff; /* Weißer Hintergrund für den Nachrichtenbereich */
-      margin-bottom: 10px; /* Abstand zum Formular */
+    .chat-room {
+        width: 20%;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        padding: 10px;
+        margin-right: 20px; /* Abstand zwischen Chat-Räumen und Nachrichten */
     }
-
-    form#form {
-      display: flex; /* Flexbox für innere Elemente */
-      gap: 10px; /* Abstand zwischen den Elementen */
+    .chat-messages {
+        flex-grow: 1;
     }
-
-    input#input {
-      flex-grow: 1; /* Nimmt verfügbaren Platz ein */
-      padding: 10px; /* Bequemer Textabstand */
-      border: 2px solid #aaa; /* Sichtbarer Rahmen */
-      border-radius: 20px; /* Stark abgerundete Ecken */
-    }
-
-    button {
-      background-color: aqua; /* Helle, auffällige Farbe */
-      border: none; /* Kein Rahmen */
-      padding: 10px 20px; /* Vertikaler und horizontaler Abstand */
-      border-radius: 20px; /* Abgerundete Ecken */
-      cursor: pointer; /* Zeigerhand beim Überfahren */
-      font-weight: bold; /* Fettgedruckter Text */
-    }
-
-    button:hover {
-      background-color: #7fffd4;
-    }
-
-    li.sent {
-      text-align: right;
-      margin-left: 50rem;
-      background-color: #dcf8c6;
+    /* Restliche CSS-Regeln bleiben gleich oder werden entsprechend angepasst */
+    /* Styles für li.sent und li.received */
+    li.sent, li.received {
+        display: flex;
+        justify-content: flex-end; /* sent */
+        padding: 10px;
+        border-radius: 10px;
+        margin-bottom: 10px;
+        /* background-color: black; */
     }
     li.received {
-      text-align: left;
-      background-color: #fff;
+        justify-content: flex-start; /* received */
+        background-color: #b3dff4; /* Angepasste Farbe für empfangene Nachrichten */
     }
   </style>
 </html>
