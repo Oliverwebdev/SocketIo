@@ -113,9 +113,19 @@ app.post("/message", async (req, res) => {
 });
 
 // Korrektur des Render-Aufrufs
-app.get("/", (req, res) => {
-  res.render("index", { title: "Startseite" });
+app.get("/", async (req, res) => {
+  try {
+    // Abfragen der letzten 10 Nachrichten, sortiert nach dem neuesten Timestamp
+    const messages = await Message.find().sort({ timestamp: -1 }).limit(10);
+    // Übergeben der Nachrichten an die EJS-Vorlage
+    res.render("index", { title: "Startseite", messages: messages });
+  } catch (err) {
+    console.error(err);
+    // Optional: Fehlerbehandlung, z.B. Anzeigen einer Fehlerseite
+    res.render("error", { message: "Fehler beim Laden der Nachrichten." });
+  }
 });
+
 
 app.get("/login", (req, res) => {
   res.render("login", { title: "Login" });
