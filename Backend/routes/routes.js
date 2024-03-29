@@ -4,13 +4,11 @@ import passport from "../config/passport-setup.js";
 import { User, Message } from "../config/db.js";
 import bcrypt from "bcryptjs";
 import { io } from "../server.js"; // Pfad anpassen
-import { registerChatHandlers } from '../chat.js'; // Pfad anpassen
+import { registerChatHandlers } from "../config/chat.js"; // Pfad anpassen
 
 const router = express.Router();
 
 // Hinzugefügte Importe
-
-
 
 // Register user
 router.post("/register", async (req, res) => {
