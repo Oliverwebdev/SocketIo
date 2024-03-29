@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrierung</title>
+    <link rel="stylesheet" href="/css/style.css"> <!-- Angenommen, es gibt eine CSS-Datei für Styling -->
+</head>
+<body>
+    <div class="container">
+        <h2>Registrieren</h2>
+        <form action="/register" method="POST">
+            <div class="form-group">
+                <label for="username">Benutzername:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="email">E-Mail:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Passwort:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="form-group">
+                <label for="confirm-password">Passwort bestätigen:</label>
+                <input type="password" id="confirm-password" name="confirm-password" required>
+            </div>
+            <button type="submit">Registrieren</button>
+        </form>
+        <p>Hast du schon ein Konto? <a href="/login">Einloggen</a></p>
+    </div>
+</body>
+</html>
