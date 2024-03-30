@@ -1,15 +1,12 @@
-// router.js
 import express from "express";
 import passport from "../config/passport-setup.js";
-import { User, Message } from "../config/db.js";
 import bcrypt from "bcryptjs";
-// Entfernt: Importe, die nicht direkt verwendet werden, um Klarheit zu schaffen.
+import { User, Message } from "../config/db.js";
 
 const router = express.Router();
 
 // Render the registration page
 router.get("/register", (req, res) => {
-  // Keine zusätzlichen Daten werden hier übergeben, aber du könntest z.B. Fehlermeldungen oder Formularwerte übergeben, falls nötig.
   res.render("register");
 });
 
@@ -22,18 +19,15 @@ router.post("/register", async (req, res) => {
   try {
     const newUser = new User({ username, password: hash });
     await newUser.save();
-    // Leitet den Benutzer nach erfolgreicher Registrierung zur Login-Seite um.
     res.redirect("/login");
   } catch (err) {
     console.error(err);
-    // Hier könntest du eine angepasste Fehlerseite rendern oder den Benutzer zur Registrierungsseite zurückleiten mit einer Fehlermeldung.
     res.status(500).send("Error registering new user.");
   }
 });
 
 // Render the login page
 router.get("/login", (req, res) => {
-  // Ähnlich wie bei der Registrierungsseite könnten hier Fehlermeldungen oder andere relevante Daten übergeben werden.
   res.render("login");
 });
 
@@ -45,29 +39,26 @@ router.post("/login", passport.authenticate("local", {
 }));
 
 // Logout
-router.get("/logout", (req, res) => {
-  req.logout();
-  res.redirect("/login");
+router.get('/logout', function(req, res) {
+  req.logout(function(err) {
+      if (err) {
+          console.error(err);
+          return res.status(500).send('Ein Fehler ist aufgetreten');
+      }
+      res.redirect('/'); // Änderung hier: Weiterleitung zur Wurzel, die index.ejs rendert
+  });
 });
 
 // Save message
-router.post("/message", async (req, res) => {
-  const { username, message } = req.body;
-  try {
-    const newMessage = new Message({ username, message });
-    await newMessage.save();
-    // Hier könntest du eine Bestätigungsseite rendern oder einfach zur Startseite umleiten.
-    res.redirect("/");
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Error saving message.");
-  }
+router.get("/messages/new", (req, res) => {
+  // Render die Seite für das Erstellen einer neuen Nachricht
+  // Hier müssen Sie sicherstellen, dass Sie eine entsprechende EJS-Datei haben (z.B. newMessage.ejs im views-Ordner)
+  res.render("message");
 });
 
 // Optionale Startseite
 router.get("/", (req, res) => {
-  // Beispiel: Ein einfaches Willkommen rendern, könnte aber erweitert werden, um z.B. Nachrichten anzuzeigen.
-  res.render("index", { user: req.user });
+  res.render("login", { user: req.user });
 });
 
 export default router;

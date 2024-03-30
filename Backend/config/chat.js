@@ -11,6 +11,10 @@ export const registerChatHandlers = (io) => {
 
     socket.emit("your id", socket.id);
 
+
+
+
+    
     socket.on("register user", (userName) => {
       if (!userName || typeof userName !== "string" || userName.length > 50) {
         socket.emit("registration failed", "Ungültiger Benutzername.");
